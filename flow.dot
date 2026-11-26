@@ -1,0 +1,17 @@
+digraph G {
+  rankdir=TB; node [fontname="Helvetica", fontsize=10, shape=box, style=rounded]; edge [fontname="Helvetica", fontsize=9];
+  start [label="Start", shape=oval];
+  add [label="Partner adds a stock batch"];
+  valid [label="Fields valid?\n(R1)", shape=diamond];
+  err [label="Show error,\nnot saved", color=red];
+  dup [label="Duplicate?\nLCS >= 80% (R2)", shape=diamond];
+  rej [label="Rejected as\nduplicate", color=red];
+  save [label="Save batch\nAVL index by ID (Unit 1)\nRed-Black index by name (Unit 5)", color=darkgreen];
+  ask [label="Transporter asks for a plan\n(location + truck kg / route)"];
+  k [label="Knapsack (Unit 3):\nbest priority within truck weight"];
+  s [label="Sum of subsets (Unit 4):\nexact truck load"];
+  g [label="Transport graph (Unit 2):\nnearby places, shortest route"];
+  show [label="Show result", shape=oval];
+  start->add->valid; valid->err [label="No"]; valid->dup [label="Yes"];
+  dup->rej [label="Yes"]; dup->save [label="No"]; save->ask; ask->k; ask->s; ask->g; k->show; s->show; g->show;
+}
